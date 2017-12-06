@@ -26,6 +26,7 @@ $ git commit -m "first commit"
 <img src="imgs/1.png">
 
 <p>版本库中存放了很多东西，比如stage,就是我们上面提到的暂存区，还有自动创建的master分支，还有指向master的head指针…….我们不能手动修改版本库内的任何数据，否则可能会造成不可预期的错误。所以我们上面，将工作区的代码提交到版本库是分为两个步骤的，第一步是通过add命令将文件添加到暂存区stage中；第二步将暂存区中的数据提交到版本库中，用commit命令，其实就是将stage中的内容提交到当前分支。我们在创建git版本库时，会为我们自动创建一个master主分支，当然我们还可以手动创建其他分支，当前分支是什么，我们commit的时候就将stage的内容提交到该分支上。</p>
+
 ```
 $ git remote add origin git@xx.xx.xx.xx:repos/xxx/xxx/xxx.git
 $ git push -u origin 分支名
