@@ -18,10 +18,11 @@ $ git add .
 $ git commit -m "first commit"
 1
 2
-```
+``` 
+
 <p>到commit这一步，只是完成了本地提交。这里为什么有一个add一个commit的过程，有必要解释一下。在git中有一个暂存区的概念，add就是将代码从工作区提交到暂存区；commit的过程就是将代码从暂存区提交到版本库。git add . 是提交全部文件到暂存区，git commit -m后面相当于给本次提交加一个注释。</p> 
 <p>这里解释一下git为什么有暂存区的概念，这是和SVN所不同的。git是分为工作区和版本库的，工作区就是我们本地看到的工作目录，版本库就是你工作目录中的.git文件。</p>
-![](../imgs/1.png)
+<img src="imgs/1.png">
 <p>版本库中存放了很多东西，比如stage,就是我们上面提到的暂存区，还有自动创建的master分支，还有指向master的head指针…….我们不能手动修改版本库内的任何数据，否则可能会造成不可预期的错误。所以我们上面，将工作区的代码提交到版本库是分为两个步骤的，第一步是通过add命令将文件添加到暂存区stage中；第二步将暂存区中的数据提交到版本库中，用commit命令，其实就是将stage中的内容提交到当前分支。我们在创建git版本库时，会为我们自动创建一个master主分支，当然我们还可以手动创建其他分支，当前分支是什么，我们commit的时候就将stage的内容提交到该分支上。</p>
 ```
 $ git remote add origin git@xx.xx.xx.xx:repos/xxx/xxx/xxx.git
@@ -30,8 +31,9 @@ $ git push -u origin 分支名
 2
 ```
 <p>最后将版本库中的代码提交到远程分支上去。到这里，将本地代码提交到远程仓库的步骤就全部完成了。我在提交的时候也遇到一些问题，拿出来我们一起分享下 </p>
-![](../imgs/2.png)
+<img src="imgs/2.png">
 <p>出现错误的原因是git服务器中的README.md文件不在本地代码目录中，可以通过如下命令进行代码合并</p>
+
 ```
 git pull --rebase origin master
 1
@@ -57,5 +59,5 @@ git push origin master  // 第一次推送后，直接使用该命令即可推�
 
 ```
 # 推荐文章
--[mac git 公司必备](http://www.jianshu.com/p/f848cf9c0b39)
+- [mac git 公司必备](http://www.jianshu.com/p/f848cf9c0b39)
 - [ssh](https://www.cnblogs.com/Mrs-cc/p/4699611.html)
