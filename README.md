@@ -56,7 +56,26 @@ sudo vi /etc/iptables.up.rules
 COMMIT
 
 ```
-### 接下来告诉iptables配置文件在哪里
+
 ```
+编写号配置文件后接下来告诉iptables配置文件在哪里
 sudo iptables-restore < /etc/iptables.up.rules
+防火墙配置通过后，接下来让防火墙跑起来
+sudo ufw status
+//Status:inactive,未被激活
+sudo ufw enable
+y
+sudo ufw status
+//Status:active
+创建shell脚本，开机启动，有时候会遇到停机的情况
+sudo vi /etc/network/if-up.d/iptables
+```
+**配置**
+```
+#!/bin/sh
+iptables-restore /etc/iptables.up.rules
+```
+**写好配置文件后给权限**
+```
+sudo chmod +x /etc/network/if-up.d/iptables
 ```
