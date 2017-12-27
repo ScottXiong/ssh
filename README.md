@@ -45,11 +45,18 @@ sudo vi /etc/iptables.up.rules
 # allow ping
 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT   
 # log denied calls
--A INPUT -m limit 5/min -j LOG --log-prefix "iptables denied:" --log-lever 7
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied:" --log-lever 7
+# drop incoming senstive connections
+-A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
+-A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
 # reject all other inbound
 -A INPUT -j REJECT
 -A FORWARD -j REJECT
 
 COMMIT
 
+```
+### 接下来告诉iptables配置文件在哪里
+```
+sudo iptables-restore < /etc/iptables.up.rules
 ```
