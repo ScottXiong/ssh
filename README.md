@@ -21,3 +21,35 @@ sudo service ssh restart ／／每修改一次配置文件都要restart一次
 既然修改了端口，那么下次再按老规矩重新登陆必然被refused，因为22端口已不可用
 ssh -p 39999 imooc_manager@xx.x.x.x
 ```
+### 配置iptables和Fail2Ban增强安全防护
+iptables就是防火墙
+```
+sudo apt-get update && sudu apt-get upgrade  //更新升级ubuntu
+iptables -F
+提示没有权限
+sudo iptables -F  // 清空所有默认规则
+sudo vi /etc/iptables.up.rules
+```
+**配置如下**
+```
+*filter
+# allow all connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# allow out traffic
+-A OUTPUT -j ACCEPT
+# allow http https
+-A INPUT -p tcp --ddport 443 -j ACCEPT
+-A INPUT -p tcp --dport 80 -j ACCEPT
+# allow ssh port login
+-A INPUT -p tcp -m state --state NEW --dport 39999 -j ACCEPT  //默认22
+# allow ping
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT   
+# log denied calls
+-A INPUT -m limit 5/min -j LOG --log-prefix "iptables denied:" --log-lever 7
+# reject all other inbound
+-A INPUT -j REJECT
+-A FORWARD -j REJECT
+
+COMMIT
+
+```
